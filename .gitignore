@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+node_modules/
+bower_components/
+
+webui/static/**/*.js.map
+webui/static/**/*.js

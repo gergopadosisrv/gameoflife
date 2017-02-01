@@ -1,0 +1,10 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "devDependencies": {
+    "express": "^4.14.0",
+    "http-proxy-middleware": "^0.17.3",
+    "serve-static": "^1.11.1",
+    "typings": "^2.1.0"
+  }
+}

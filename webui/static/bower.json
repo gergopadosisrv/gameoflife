@@ -1,0 +1,8 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "1.6.1",
+    "jquery": "^2.2.2"
+  }
+}

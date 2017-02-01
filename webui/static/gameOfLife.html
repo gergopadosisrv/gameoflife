@@ -1,0 +1,22 @@
+<div ng-controller="GameOfLifeController">
+
+    <h1>Game of Life</h1>
+
+    Height: <input type="text" ng-model="dimension.height" ng-change="init()"/>
+    Width: <input type="text" ng-model="dimension.width" ng-change="init()"/>
+
+    <button ng-click="next()" ng-if="!isAutoPlayInProgress">Show next generation</button>
+
+    <button ng-click="autoPlay()" ng-if="!isAutoPlayInProgress">Auto play start</button>
+    <button ng-click="autoPlay()" ng-if="isAutoPlayInProgress">Auto play stop</button>
+
+
+    <table id="board">
+        <tr ng-repeat="row in board track by $index">
+            <td ng-repeat="col in row track by $index" ng-click="toggle($parent.$index, $index)"
+                class="pointered">
+                <span ng-show="col == 1">o</span>
+            </td>
+        </tr>
+    </table>
+</div>
