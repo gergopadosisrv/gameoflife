@@ -3,7 +3,9 @@
  */
 module gol {
     export interface IGameOfLifeService {
-        getNextGeneration: (board: number[][]) => ng.IHttpPromise<BoardDto>;
+        getNextGeneration: (board: BoardDto) => ng.IHttpPromise<BoardDto>;
+        getAllPattern: () => ng.IHttpPromise<BoardDto[]>;
+        savePattern: (board: BoardDto) => ng.IHttpPromise<number>;
     }
 
     export class GameOfLifeService implements IGameOfLifeService {
@@ -13,9 +15,16 @@ module gol {
             this.$http = _$http;
         }
 
-        getNextGeneration(board: number[][]) {
-            var a = new BoardDto();
-            return this.$http.post("api/getNextGeneration", new BoardDto({board: board}));
+        getNextGeneration(board: BoardDto) {
+            return this.$http.post("api/getNextGeneration", board);
+        }
+
+        getAllPattern() {
+            return this.$http.get("api/getAllPattern");
+        }
+
+        savePattern(board: BoardDto) {
+            return this.$http.post("api/savePattern", board);
         }
     }
 

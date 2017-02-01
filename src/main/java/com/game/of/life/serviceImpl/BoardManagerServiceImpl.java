@@ -1,13 +1,25 @@
 package com.game.of.life.serviceImpl;
 
+import com.game.of.life.dao.BoardRepository;
+import com.game.of.life.dto.BoardDto;
+import com.game.of.life.model.Board;
 import com.game.of.life.service.BoardManagerService;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by gergopados on 2017. 02. 01..
  */
 @Service
 public class BoardManagerServiceImpl implements BoardManagerService {
+
+    @Autowired
+    private BoardRepository boardRepository;
 
     public int[][] getNextGeneration(int[][] board) throws Exception {
         if (board == null) {
@@ -29,6 +41,30 @@ public class BoardManagerServiceImpl implements BoardManagerService {
         }
 
         return nextGeneration;
+    }
+
+    public List<BoardDto> getAllPattern() {
+        Gson gson = new Gson();
+        return StreamSupport.stream(boardRepository.findAll().spliterator(), false).map(x -> {
+            return new BoardDto() {{
+                setBoard(gson.fromJson(x.getBoard(), int[][].class));
+                setId(x.getId());
+                setName(x.getName());
+            }};
+        }).collect(Collectors.toList());
+    }
+
+    public Long savePattern(BoardDto boardDto) {
+        Gson gson = new Gson();
+        Board board = new Board();
+
+        board.setId(boardDto.getId());
+        board.setName(boardDto.getName());
+        board.setBoard(gson.toJson(boardDto.getBoard()));
+
+        Board created = boardRepository.save(board);
+
+        return created.getId();
     }
 
     private int getNeighboursOfCell(int[][] board, int row, int column) {

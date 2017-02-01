@@ -2,8 +2,13 @@
 
     <h1>Game of Life</h1>
 
+    Name: <input type="text" ng-model="selectedBoard.name" maxlength="100"/>
     Height: <input type="text" ng-model="dimension.height" ng-change="init()"/>
     Width: <input type="text" ng-model="dimension.width" ng-change="init()"/>
+    Width: <input type="text" ng-model="dimension.width" ng-change="init()"/>
+    <br>
+    <button ng-click="save()" ng-if="!isAutoPlayInProgress">Save</button>
+    <button ng-click="saveAs()" ng-if="!isAutoPlayInProgress">Save as</button>
 
     <button ng-click="next()" ng-if="!isAutoPlayInProgress">Show next generation</button>
 
@@ -12,11 +17,19 @@
 
 
     <table id="board">
-        <tr ng-repeat="row in board track by $index">
+        <tr ng-repeat="row in selectedBoard.board track by $index">
             <td ng-repeat="col in row track by $index" ng-click="toggle($parent.$index, $index)"
                 class="pointered">
                 <span ng-show="col == 1">o</span>
             </td>
         </tr>
     </table>
+
+    <h1 ng-if="patterns.length > 0">Saved patterns</h1>
+    <table>
+        <tr ng-repeat="pattern in patterns" ng-click="selectPattern(pattern)">
+            <td>{{pattern.name}}</td>
+        </tr>
+    </table>
+
 </div>
