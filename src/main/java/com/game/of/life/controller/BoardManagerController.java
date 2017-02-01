@@ -2,6 +2,7 @@ package com.game.of.life.controller;
 
 import com.game.of.life.dto.BoardDto;
 import com.game.of.life.service.BoardManagerService;
+import com.game.of.life.service.LifParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,11 @@ public class BoardManagerController {
     @Autowired
     private BoardManagerService boardManagerService;
 
+    @Autowired
+    private LifParser lifParser;
+
     @RequestMapping(value = "/getNextGeneration", method = RequestMethod.POST)
-    public ResponseEntity<?> greeting(@RequestBody BoardDto board) {
+    public ResponseEntity<?> getNextGeneration(@RequestBody BoardDto board) {
         try {
             int[][] nextGeneration = boardManagerService.getNextGeneration(board.getBoard());
             BoardDto newBoard = new BoardDto();
